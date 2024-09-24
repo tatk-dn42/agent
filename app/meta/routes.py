@@ -22,7 +22,7 @@ def info():
     protocols = {}
 
     if current_app.config["WIREGUARD_ENABLED"]:
-        public_key = Path(current_app.config["WIREGUARD_PUBKEY_PATH"]).read_text()
+        public_key = Path(current_app.config["WIREGUARD_PUBKEY_PATH"]).read_text(encoding="utf-8")
         protocols["wireguard"] = {
             "enabled": current_app.config["WIREGUARD_ENABLED"],
             "public_key": public_key.strip("\n")
