@@ -5,12 +5,7 @@ from flask import current_app, jsonify
 from pathlib import Path
 
 
-@bp.get("/info",
-        operation_id="get_node_info",
-        responses={
-            200: InfoResponse
-        }
-        )
+@bp.get("/info", operation_id="get_node_info", responses={200: InfoResponse})
 def info():
     """Get node info
     Gets information from node
@@ -29,12 +24,14 @@ def info():
             "public_key": public_key.strip("\n")
         }
 
-    return jsonify(InfoResponse(
-        id=current_app.config["NODE_ID"],
-        fqdn=current_app.config["NODE_FQDN"],
-        current_peers=peer_count,
-        peer_limit=current_app.config["PEER_LIMIT"],
-        link_local_ips=loopback_ips,
-        peering_policy=current_app.config["PEERING_POLICY"],
-        protocols=protocols
-    ).model_dump())
+    return jsonify(
+        InfoResponse(
+            id=current_app.config["NODE_ID"],
+            fqdn=current_app.config["NODE_FQDN"],
+            current_peers=peer_count,
+            peer_limit=current_app.config["PEER_LIMIT"],
+            link_local_ips=loopback_ips,
+            peering_policy=current_app.config["PEERING_POLICY"],
+            protocols=protocols
+        ).model_dump()
+    )
