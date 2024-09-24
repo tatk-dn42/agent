@@ -1,0 +1,10 @@
+# Changelog
+
+## [0.0.2](https://github.com/tatk-dn42/agent/compare/v0.0.1...v0.0.2) (2024-09-24)
+
+
+### Bug Fixes
+
+* Added linters ([#1](https://github.com/tatk-dn42/agent/issues/1)) ([ee7067b](https://github.com/tatk-dn42/agent/commit/ee7067baa8548df0d5186ec4bf278004cde9b01b))
+* release config ([#2](https://github.com/tatk-dn42/agent/issues/2)) ([c4804c6](https://github.com/tatk-dn42/agent/commit/c4804c6c0f99471100e2a69ea749bb2474d1435e))
+* release config ([#4](https://github.com/tatk-dn42/agent/issues/4)) ([10d226b](https://github.com/tatk-dn42/agent/commit/10d226b58d4db15a04137c517351cceb43100782))
