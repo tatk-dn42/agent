@@ -32,6 +32,7 @@ def info():
         InfoResponse(
             id=current_app.config["NODE_ID"],
             fqdn=current_app.config["NODE_FQDN"],
+            agent_version=current_app.config["AGENT_VERSION"],
             current_peers=peer_count,
             peer_limit=current_app.config["PEER_LIMIT"],
             link_local_ips=loopback_ips,

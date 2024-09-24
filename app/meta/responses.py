@@ -21,6 +21,7 @@ class InfoResponse(BaseModel):
     fqdn: str = Field(
         "rt0.test.tatk.network", description="Fully qualified domain name of node"
     )
+    agent_version: str = Field("1.0.0", description="Version of agent installed")
     current_peers: int = Field(24, description="Number of peers")
     peer_limit: int = Field(50, description="Maximum peers")
     link_local_ips: dict = Field(
