@@ -23,9 +23,9 @@ def create_app(config_class=Config):
 
     security_schemes = {"api_key": bearer_scheme}
 
-    app = OpenAPI(__name__,
-                  doc_prefix="/api", info=info,security_schemes=security_schemes
-                  )
+    app = OpenAPI(
+        __name__, doc_prefix="/api", info=info, security_schemes=security_schemes
+    )
 
     app.config.from_object(config_class)
 

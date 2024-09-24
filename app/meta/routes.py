@@ -21,7 +21,7 @@ def info():
         public_key = Path(current_app.config["WIREGUARD_PUBKEY_PATH"]).read_text()
         protocols["wireguard"] = {
             "enabled": current_app.config["WIREGUARD_ENABLED"],
-            "public_key": public_key.strip("\n")
+            "public_key": public_key.strip('\n')
         }
 
     return jsonify(
@@ -32,6 +32,6 @@ def info():
             peer_limit=current_app.config["PEER_LIMIT"],
             link_local_ips=loopback_ips,
             peering_policy=current_app.config["PEERING_POLICY"],
-            protocols=protocols
+            protocols=protocols,
         ).model_dump()
     )
