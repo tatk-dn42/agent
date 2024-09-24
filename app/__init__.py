@@ -9,7 +9,7 @@ from app.meta import bp as main_bp
 
 def create_app(config_class=Config):
     """Flask App Factory Instance"""
-    
+
     info = Info(
         title="TATK Network Agent",
         version="0.0.1",
