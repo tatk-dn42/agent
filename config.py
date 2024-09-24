@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 
-
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv()
 
@@ -17,4 +16,3 @@ class Config:
     WIREGUARD_PUBKEY_PATH = (
             os.environ.get("WIREGUARD_PUBKEY_PATH") or "/etc/wireguard/publickey"
     )
-    
