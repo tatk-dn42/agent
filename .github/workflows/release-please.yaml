@@ -1,0 +1,24 @@
+---
+on:
+  push:
+    branches:
+      - main
+
+name: Release Please
+
+permissions: { }
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authenticate as GitHub App
+        id: githubAppAuth
+        run: |
+          TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.TATK_BOT_TOKEN }})"
+          echo "::add-mask::$TOKEN"
+          echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
+
+      - uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ steps.githubAppAuth.outputs.token }}

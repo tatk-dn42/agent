@@ -8,6 +8,8 @@ on: # yamllint disable-line rule:truthy
       - edited
       - synchronize
 
+  workflow_dispatch:
+
 permissions: { }
 
 jobs:
@@ -24,7 +26,7 @@ jobs:
       - name: Authenticate as GitHub App
         id: githubAppAuth
         run: |
-          TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.YRB_BOT_TOKEN }})"
+          TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.TATK_BOT_TOKEN }})"
           echo "::add-mask::$TOKEN"
           echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
 
