@@ -1,3 +1,8 @@
+# pylint: disable=wrong-import-position
+# ruff: noqa: E402, F401
+# -*- coding: utf-8 -*-
+"""Module for Metadata related routes"""
+
 from flask_openapi3 import APIBlueprint, Tag
 
 meta_tag = Tag(name="meta", description="Metadata")
