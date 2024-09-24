@@ -3,15 +3,16 @@
 """Module providing services to get Peer related information from the node"""
 
 import re
+import subprocess
 from flask import current_app
 
 
-def parse_protocols_output(contents: str):
+def parse_protocols_output(contents):
     """
     Parses the output of the Bird "Protocols" command.
 
             Parameters:
-                    contents (str): Contents of the command output
+                    contents: Contents of the command output
 
             Returns:
                     output (list): List containing list items for each protocol
@@ -20,6 +21,7 @@ def parse_protocols_output(contents: str):
     output = []
 
     for line in contents:
+        line = line.decode("utf-8")
         line = line.strip("\n")
         output.append(re.split(r"\s+(?=\S)", line, maxsplit=6))
 
@@ -34,9 +36,8 @@ def get_peer_count() -> int:
                     peers (int): Count of peers
     """
 
-    # TODO: Retrieve information from Bird directly
-    with open("/app/bird_output", "rt") as input_file:
-        peers = parse_protocols_output(input_file)
+    protocols = subprocess.Popen("birdc -r" + " show protocols | tail -n+4", shell=True, stdout=subprocess.PIPE)
+    peers = parse_protocols_output(protocols.stdout)
 
     peers = [
         peer

@@ -10,10 +10,9 @@ RUN apt-get update -y \
  && rm -rf /var/lib/apt/lists/* \
 
 COPY requirements.txt requirements.txt
-RUN pip3 install --no-cache-dir -r requirements.txt
-RUN chown -R app /app
-RUN chown -R app /app
+RUN pip3 install -r requirements.txt
 
+RUN chown -R app /app
 USER app
 
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
