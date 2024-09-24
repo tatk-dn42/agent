@@ -3,6 +3,7 @@
 """Module providing config to Flask App"""
 
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -12,6 +13,7 @@ load_dotenv()
 class Config:
     """Class for App Config"""
 
+    AGENT_VERSION = Path("version.txt").read_text(encoding="utf-8")
     SECRET_KEY = os.environ.get("SECRET_KEY") or "you-will-never-guess"
     NODE_ID = os.environ.get("NODE_ID") or "rt0-test"
     NODE_FQDN = os.environ.get("NODE_FQDN") or "rt0.test.tatk.network"

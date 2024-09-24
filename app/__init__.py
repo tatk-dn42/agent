@@ -12,7 +12,7 @@ def create_app(config_class=Config):
 
     info = Info(
         title="TATK Network Agent",
-        version="0.0.1",
+        version=Config.AGENT_VERSION,
         summary="Agent for auto-peering within TATK Network",
         contact={
             "name": "TATK Network",
