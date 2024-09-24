@@ -1,0 +1,45 @@
+---
+name: Super Linter
+
+on: # yamllint disable-line rule:truthy
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+permissions: { }
+
+jobs:
+  build:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+
+    steps:
+      - name: Authenticate as GitHub App
+        id: githubAppAuth
+        run: |
+          TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.YRB_BOT_TOKEN }})"
+          echo "::add-mask::$TOKEN"
+          echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Super-linter
+        uses: super-linter/super-linter/slim@v6.7.0
+        env:
+          GITHUB_TOKEN: ${{ steps.githubAppAuth.outputs.token }}
+          DEFAULT_BRANCH: main
+          LOG_LEVEL: ERROR
+          VALIDATE_JSCPD: false
+          VALIDATE_PYTHON_FLAKE8: false
+          VALIDATE_PYTHON_ISORT: false
+          VALIDATE_PYTHON_MYPY: false
