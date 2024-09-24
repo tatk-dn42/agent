@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.3](https://github.com/tatk-dn42/agent/compare/v0.0.2...v0.0.3) (2024-09-24)
+
+
+### Bug Fixes
+
+* add version ([#5](https://github.com/tatk-dn42/agent/issues/5)) ([b9832be](https://github.com/tatk-dn42/agent/commit/b9832be9e6fa5b5574e97ac1fb09f02ce120a936))
+* version ([#7](https://github.com/tatk-dn42/agent/issues/7)) ([45bd9ea](https://github.com/tatk-dn42/agent/commit/45bd9ea914802f102c8f959a947b3106f1fa69df))
+
 ## [0.0.2](https://github.com/tatk-dn42/agent/compare/v0.0.1...v0.0.2) (2024-09-24)
 
 
