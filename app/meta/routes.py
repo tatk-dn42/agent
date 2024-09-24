@@ -1,8 +1,12 @@
-from app.meta import bp
-from app.meta.responses import InfoResponse
-from app.services import ip_address, peer
-from flask import current_app, jsonify
+# -*- coding: utf-8 -*-
+"""Module for Metadata related routes"""
+
 from pathlib import Path
+from flask import current_app, jsonify
+
+from app.meta import bp
+from app.services import ip_address, peer
+from app.meta.responses import InfoResponse
 
 
 @bp.get("/info", operation_id="get_node_info", responses={200: InfoResponse})

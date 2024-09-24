@@ -1,14 +1,22 @@
-from pydantic import BaseModel, Field
+# pylint: disable=too-few-public-methods
+# -*- coding: utf-8 -*-
+"""Module for Metadata related responses/models"""
+
 from enum import Enum
+from pydantic import BaseModel, Field
 
 
 class PeeringPolicy(str, Enum):
-    open = "Open"
-    selective = "Selective"
-    closed = "Closed"
+    """Class for PeeringPolicy Enum"""
+
+    OPEN = "Open"
+    SELECTIVE = "Selective"
+    CLOSED = "Closed"
 
 
 class InfoResponse(BaseModel):
+    """Class for InfoResponse schema"""
+
     id: str = Field("rt0.test", description="ID of node")
     fqdn: str = Field(
         "rt0.test.tatk.network", description="Fully qualified domain name of node"
@@ -18,5 +26,5 @@ class InfoResponse(BaseModel):
     link_local_ips: dict = Field(
         {"ipv4": "203.0.113.123", "ipv6": "2001:0db8:0000:0000:0000:0000:0000:0000"}
     )
-    peering_policy: PeeringPolicy = PeeringPolicy.open
+    peering_policy: PeeringPolicy = PeeringPolicy.OPEN
     protocols: dict = Field({"wireguard": {"enabled": True, "public_key": ""}})

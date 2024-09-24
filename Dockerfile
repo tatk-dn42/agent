@@ -9,10 +9,10 @@ RUN apt-get update -y \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
 
-RUN echo 'PUBLIC_KEY' > /etc/wireguard/publickey
-
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
+RUN chown -R app /app
+RUN chown -R app /app
 
 USER app
 
