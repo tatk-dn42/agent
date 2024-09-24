@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/tatk-dn42/agent/compare/v0.0.3...v0.0.4) (2024-09-24)
+
+
+### Bug Fixes
+
+* agg WSGI ([#8](https://github.com/tatk-dn42/agent/issues/8)) ([62a818b](https://github.com/tatk-dn42/agent/commit/62a818bea34c27da7ebb6433ef4cb44008f36821))
+
 ## [0.0.3](https://github.com/tatk-dn42/agent/compare/v0.0.2...v0.0.3) (2024-09-24)
 
 
