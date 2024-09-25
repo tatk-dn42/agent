@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.5](https://github.com/tatk-dn42/agent/compare/v0.0.4...v0.0.5) (2024-09-24)
+
+
+### Bug Fixes
+
+* remove wsgi ([#10](https://github.com/tatk-dn42/agent/issues/10)) ([339ac38](https://github.com/tatk-dn42/agent/commit/339ac383230054551d66be00f4318abba520dba8))
+
 ## [0.0.4](https://github.com/tatk-dn42/agent/compare/v0.0.3...v0.0.4) (2024-09-24)
 
 
