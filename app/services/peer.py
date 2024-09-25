@@ -23,6 +23,10 @@ def parse_protocols_output(contents):
     for line in contents:
         line = line.decode("utf-8")
         line = line.strip("\n")
+
+        if line.startswith("BIRD") or line.startswith("Name") or line.startswith("Access"):
+            continue
+
         output.append(re.split(r"\s+(?=\S)", line, maxsplit=6))
 
     return output
@@ -36,9 +40,9 @@ def get_peer_count() -> int:
                     peers (int): Count of peers
     """
 
-    protocols = subprocess.Popen("birdc -r" + " show protocols" +
-                                 "| tail -n+4", shell=True, stdout=subprocess.PIPE)
+    protocols = subprocess.Popen(["birdc", "show protocols"], stdout=subprocess.PIPE)
     peers = parse_protocols_output(protocols.stdout)
+
     protocols.stdout.close()
     protocols.wait()
 
