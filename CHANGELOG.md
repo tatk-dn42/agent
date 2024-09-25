@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0](https://github.com/tatk-dn42/agent/compare/v0.0.5...v0.1.0) (2024-09-25)
+
+
+### Features
+
+* Bird Peer Count ([#13](https://github.com/tatk-dn42/agent/issues/13)) ([b97e33e](https://github.com/tatk-dn42/agent/commit/b97e33ea87b88e9c650662da4950d23147fdae5b))
+
 ## [0.0.5](https://github.com/tatk-dn42/agent/compare/v0.0.4...v0.0.5) (2024-09-24)
 
 
