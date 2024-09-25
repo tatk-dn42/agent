@@ -5,15 +5,15 @@
 import netifaces as ni
 
 
-def get_link_local_address(interface_name: str) -> object:
+def get_loopback_addresses(interface_name: str) -> object:
     """
-    Returns an object containing the Link Local IP address of the node.
+    Returns an object containing the Loopback addresses of the node.
 
             Parameters:
-                    interface_name (str): Name of the Link Local Interface
+                    interface_name (str): Name of the Loopback Interface
 
             Returns:
-                    ip_object (obj): Object containing the Link Local IP address
+                    ip_object (obj): Object containing the Loopback IP address
     """
 
     # TODO: Handle nodes with or without v4/v6

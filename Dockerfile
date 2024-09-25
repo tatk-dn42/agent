@@ -10,12 +10,12 @@ RUN apt-get update -y \
  && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-RUN mkdir -p /run/bird
-
-RUN chown -R app /app
-RUN chown -R app /run/bird
+RUN mkdir -p /run/bird \
+  && chown -R app /app \
+  && chown -R app /run/bird \
+    
 USER app
 
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]

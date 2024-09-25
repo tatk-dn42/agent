@@ -24,6 +24,9 @@ class InfoResponse(BaseModel):
     agent_version: str = Field("1.0.0", description="Version of agent installed")
     current_peers: int = Field(24, description="Number of peers")
     peer_limit: int = Field(50, description="Maximum peers")
+    loopback_ips: dict = Field(
+        {"ipv4": "127.0.0.1", "ipv6": "::1"}
+    )
     link_local_ips: dict = Field(
         {"ipv4": "203.0.113.123", "ipv6": "2001:0db8:0000:0000:0000:0000:0000:0000"}
     )
