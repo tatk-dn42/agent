@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/tatk-dn42/agent/compare/v0.1.0...v0.1.1) (2024-09-25)
+
+
+### Bug Fixes
+
+* Correct bird command handling ([fe675e5](https://github.com/tatk-dn42/agent/commit/fe675e50e59344c50d7f0a39d6034784c41e050f))
+
 ## [0.1.0](https://github.com/tatk-dn42/agent/compare/v0.0.5...v0.1.0) (2024-09-25)
 
 
