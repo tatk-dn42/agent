@@ -41,7 +41,10 @@ def get_peer_count() -> int:
     """
 
     protocols = subprocess.Popen(["birdc", "show protocols"], stdout=subprocess.PIPE)
+
     peers = parse_protocols_output(protocols.stdout)
+    protocols.stdout.close()
+    protocols.wait()
 
     protocols.stdout.close()
     protocols.wait()
