@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/tatk-dn42/agent/compare/v0.1.1...v0.1.2) (2024-09-25)
+
+
+### Bug Fixes
+
+* Link Local and Loopback Addresses ([#17](https://github.com/tatk-dn42/agent/issues/17)) ([d293d0b](https://github.com/tatk-dn42/agent/commit/d293d0b5cd0f25edeea77c69fd66d80fe7078e0b))
+
 ## [0.1.1](https://github.com/tatk-dn42/agent/compare/v0.1.0...v0.1.1) (2024-09-25)
 
 
