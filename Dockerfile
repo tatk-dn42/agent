@@ -15,6 +15,7 @@ RUN pip3 install -r requirements.txt
 RUN mkdir -p /run/bird
 
 RUN chown -R app /app
+RUN chown -R app /run/bird
 USER app
 
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
