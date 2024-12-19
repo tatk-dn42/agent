@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 """Module providing helper functions for processing"""
 
+import ipaddress
 import re
 import shlex
 import subprocess
-
-from pythonping import ping
 
 
 def run_bird_command(command, timeout=3, restricted=True):
@@ -127,23 +126,24 @@ def parse_bgp_info(contents):
     return bgp_info
 
 
-def get_dn42_communities(endpoint):
+def get_dn42_communities(endpoint, source):
     """
     Processes DN42 Endpoint to produce BGP communities.
 
             Parameters:
                     endpoint (str): Endpoint to check
+                    source (str): Source address or interface
 
             Returns:
                     communities (dict): Dict containing community info
     """
 
-    ping_output = ping(endpoint, count=3)
+    ping_output = ping(endpoint, interface=source)
 
-    if ping_output.stats_packets_returned == 0:
+    if not ping_output:
         return False
 
-    match ping_output.rtt_avg_ms:
+    match float(ping_output["average"]):
         case num if 0 <= num < 2.7:
             latency = 1
         case num if 2.7 <= num < 7.3:
@@ -168,3 +168,29 @@ def get_dn42_communities(endpoint):
         "bandwidth": 24,
         "encryption": 34
     }
+
+
+def ping(host, interface, ping_count=3):
+    ip = ipaddress.ip_address(host)
+
+    rtt = {}
+
+    if ip.version == 4:
+        output = subprocess.run(["ping", "-c", str(ping_count), "-I", interface, host], capture_output=True)
+
+    elif ip.version == 6:
+        output = subprocess.run(["ping6", "-c", str(ping_count), "-I", interface, host], capture_output=True)
+    else:
+        return False
+
+    if output.returncode != 0:
+        # Endpoint unreachable
+        return False
+
+    for line in output.stdout.decode("utf-8").split('\n'):
+        if line.startswith("rtt"):
+            rtt["min"] = line.split('=')[1].split('/')[0].lstrip()
+            rtt["max"] = line.split('=')[1].split('/')[1]
+            rtt["average"] = line.split('=')[1].split('/')[2]
+
+    return rtt
