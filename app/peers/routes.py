@@ -11,7 +11,7 @@ from app.services import helpers
 from app.services import peer as peer_service
 
 
-@bp.get("/", operation_id="get_peers_list", responses={200: {}})
+@bp.get("/", operation_id="get_peers_list", responses={200: {}}, security=[{"jwt": []}])
 @jwt_required()
 def get_peers_list():
     """Get list of peers
@@ -30,7 +30,7 @@ def get_peers_list():
     return jsonify(peer_list)
 
 
-@bp.get("/<id>", operation_id="get_peer", responses={200: PeerResponse})
+@bp.get("/<id>", operation_id="get_peer", responses={200: PeerResponse}, security=[{"jwt": []}])
 @jwt_required()
 def get_peer(path: PeerPath):
     """Get peer
@@ -48,7 +48,7 @@ def get_peer(path: PeerPath):
     return jsonify(PeerResponse.model_validate(peer_detail).model_dump())
 
 
-@bp.post("/<id>/disable", operation_id="disable_peer", responses={})
+@bp.post("/<id>/disable", operation_id="disable_peer", responses={}, security=[{"jwt": []}])
 @jwt_required()
 def disable_peer(path: PeerPath):
     """Disable peer
@@ -76,7 +76,8 @@ def disable_peer(path: PeerPath):
         "message": "Peer has been disabled"
     }, 200
 
-@bp.post("/<id>/enable", operation_id="enable_peer", responses={})
+
+@bp.post("/<id>/enable", operation_id="enable_peer", responses={}, security=[{"jwt": []}])
 @jwt_required()
 def enable_peer(path: PeerPath):
     """Enable peer
@@ -102,4 +103,50 @@ def enable_peer(path: PeerPath):
     return {
         "code": 200,
         "message": "Peer has been enabled"
+    }, 200
+
+
+@bp.post("/<id>/restart", operation_id="restart_peer", responses={}, security=[{"jwt": []}])
+@jwt_required()
+def restart_peer(path: PeerPath):
+    """Restart peer
+    Restart given peer
+    """
+
+    try:
+        peer_service.get_peer_detail(path.id)
+    except PeerNotFoundException:
+        return {
+            "code": 404,
+            "message": "Peer not found"
+        }, 404
+
+    helpers.run_bird_command(f"restart {path.id}", restricted=False)
+
+    return {
+        "code": 200,
+        "message": "Peer has been restarted"
+    }, 200
+
+
+@bp.post("/<id>/reload", operation_id="reload_peer", responses={}, security=[{"jwt": []}])
+@jwt_required()
+def reload_peer(path: PeerPath):
+    """Reload peer
+    Reload given peer
+    """
+
+    try:
+        peer_service.get_peer_detail(path.id)
+    except PeerNotFoundException:
+        return {
+            "code": 404,
+            "message": "Peer not found"
+        }, 404
+
+    helpers.run_bird_command(f"reload {path.id}", restricted=False)
+
+    return {
+        "code": 200,
+        "message": "Peer has been reloaded"
     }, 200

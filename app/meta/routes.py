@@ -2,12 +2,13 @@
 """Module for Metadata related routes"""
 
 from pathlib import Path
+
 from flask import current_app, jsonify
 from flask_jwt_extended import jwt_required, get_jwt
 
 from app.meta import bp
-from app.services import ip_address, peer
 from app.meta.responses import InfoResponse
+from app.services import ip_address, peer
 
 
 @bp.get("/info", operation_id="get_node_info", responses={200: InfoResponse})
@@ -51,7 +52,8 @@ def info():
         ).model_dump()
     )
 
-@bp.get("/whoami", operation_id="who_am_i", responses={})
+
+@bp.get("/whoami", operation_id="who_am_i", responses={}, security=[{"jwt": []}])
 @jwt_required()
 def whoami():
     """Get current auth user
