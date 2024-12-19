@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/tatk-dn42/agent/compare/v0.5.0...v0.5.1) (2024-12-19)
+
+
+### Bug Fixes
+
+* IPv6 Ping ([#31](https://github.com/tatk-dn42/agent/issues/31)) ([9b9bafc](https://github.com/tatk-dn42/agent/commit/9b9bafc8b3fc39ac1840000cbe61cd484603a4f9))
+
 ## [0.5.0](https://github.com/tatk-dn42/agent/compare/v0.4.0...v0.5.0) (2024-12-19)
 
 
