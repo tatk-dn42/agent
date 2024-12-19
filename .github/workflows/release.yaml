@@ -2,12 +2,13 @@ on:
   release:
     types: [ published ]
 
-name: Deploy
+name: Release
 
 permissions: { }
 
 jobs:
-  deploy-test:
+  release:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
