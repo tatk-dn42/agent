@@ -13,8 +13,11 @@ COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 RUN mkdir -p /run/bird \
+  && mkdir /peers \
+  && chown -R bird: /peers \
   && chown -R app: /app \
-  && chown -R app: /run/bird
+  && chown -R app: /run/bird \
+  && chmod g+w /peers
 
 COPY bird_config/* /etc/bird
 RUN usermod -a -G bird app

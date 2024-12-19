@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 """Module for Session related routes"""
 
-from flask import jsonify
+import os
+
+import jinja2
+from flask import jsonify, current_app
 from flask_jwt_extended import jwt_required
+from jinja2 import FileSystemLoader
 
 from app.services import helpers
 from app.services import peer as peer_service
 from app.sessions import bp
 from app.sessions.exceptions import SessionNotFoundException
+from app.sessions.requests import SessionBody
 from app.sessions.responses import SessionPath, SessionResponse
 
 
@@ -150,4 +155,83 @@ def reload_session(path: SessionPath):
     return {
         "code": 200,
         "message": "Session has been reloaded"
+    }, 200
+
+
+@bp.post("/", operation_id="create_session", responses={}, security=[{"jwt": []}])
+@jwt_required()
+def create_session(body: SessionBody):
+    """Create session
+    Creates a new session
+    """
+
+    # TODO: Check if interface exists
+
+    path = current_app.config["AUTO_PEER_SESSION_PATH"] + f"/{body.session_id}.conf"
+
+    if os.path.isfile(path):
+        return {
+            "code": 400,
+            "message": "Session already exists"
+        }, 400
+
+    environment = jinja2.Environment(loader=FileSystemLoader("app/templates/"))
+    template = environment.get_template("peer.conf.j2")
+    output = template.render(body)
+
+    with open(path, "w") as file:
+        file.write(output)
+
+    config_check = helpers.run_bird_command("configure check", restricted=False)
+
+    if "Configuration OK" in config_check:
+        helpers.run_bird_command("configure", restricted=False)
+
+    else:
+        os.remove(path)
+
+        return {
+            "code": 400,
+            "message": "The config could not be parsed, please try again"
+        }, 400
+
+    return jsonify(body.model_dump()), 201
+
+
+@bp.delete("/<id>", operation_id="delete_session", responses={},
+           security=[{"jwt": []}])
+@jwt_required()
+def delete_session(path: SessionPath):
+    """Delete Session
+    Deletes a given session
+    """
+
+    try:
+        peer_detail = peer_service.get_peer_detail(path.id)
+        peer_detail["session_id"] = path.id
+    except SessionNotFoundException:
+        return {
+            "code": 404,
+            "message": "Session not found"
+        }, 404
+
+    file_path = current_app.config["AUTO_PEER_SESSION_PATH"] + f"/{path.id}.conf"
+
+    helpers.run_bird_command(f"disable {path.id}", restricted=False)
+    os.remove(file_path)
+
+    config_check = helpers.run_bird_command("configure check", restricted=False)
+
+    if "Configuration OK" in config_check:
+        helpers.run_bird_command("configure", restricted=False)
+
+    else:
+        return {
+            "code": 500,
+            "message": "Something went wrong when deleting the session, please try again"
+        }, 500
+
+    return {
+        "code": 200,
+        "message": "Session deleted"
     }, 200
