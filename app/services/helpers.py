@@ -88,7 +88,7 @@ def parse_bgp_info(contents):
         elif line.startswith("Session:"):
             bgp_info["session"] = line.split(":")[1].strip()
         elif line.startswith("Source address:"):
-            bgp_info["local_address"] = line.split(":")[1].strip()
+            bgp_info["local_address"] = line.split(":", 1)[1].strip()
         elif line.startswith("Hold timer:"):
             bgp_info["timer"]["hold"] = line.split(":")[1].strip()
         elif line.startswith("Keepalive timer:"):
