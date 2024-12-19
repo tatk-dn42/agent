@@ -4,9 +4,9 @@
 
 from flask_openapi3 import OpenAPI, Info
 
-from config import Config
 from app.meta import bp as meta_bp
-from app.peers import bp as peers_bp
+from app.sessions import bp as peers_bp
+from config import Config
 
 
 def create_app(config_class=Config):

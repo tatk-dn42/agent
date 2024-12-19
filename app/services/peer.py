@@ -4,16 +4,16 @@
 
 from flask import current_app
 
-from app.peers.exceptions import PeerNotFoundException
 from app.services import helpers
+from app.sessions.exceptions import SessionNotFoundException
 
 
 def get_peers() -> list:
     """
-    Returns the list of automatic BGP peers on the node.
+    Returns the list of automatic BGP sessions on the node.
 
             Returns:
-                    peers (list): List of peers
+                    sessions (list): List of sessions
     """
 
     peer_command = helpers.run_bird_command("show protocols")
@@ -34,12 +34,12 @@ def get_peer_detail(peer) -> dict:
     Fetches the detailed information about a Bird Peer
 
             Returns:
-                    peers (dict): List of peers
+                    sessions (dict): List of sessions
     """
 
     peer_command = helpers.run_bird_command(f"show protocols all {peer}")
 
     if "CF_SYM_UNDEFINED" in peer_command:
-        raise PeerNotFoundException("Peer not found")
+        raise SessionNotFoundException("Session not found")
 
     return helpers.parse_bgp_info(peer_command)
