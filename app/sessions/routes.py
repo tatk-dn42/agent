@@ -2,6 +2,7 @@
 """Module for Session related routes"""
 
 import os
+from pprint import pprint
 
 import jinja2
 from flask import jsonify, current_app
@@ -175,9 +176,24 @@ def create_session(body: SessionBody):
             "message": "Session already exists"
         }, 400
 
+    dn42_communities = helpers.get_dn42_communities(body.remote_address)
+
+    if not dn42_communities:
+        return {
+            "code": 400,
+            "message": "Something went wrong when generating the community values, please try again"
+        }, 400
+
+    pprint(dn42_communities)
+
     environment = jinja2.Environment(loader=FileSystemLoader("app/templates/"))
     template = environment.get_template("peer.conf.j2")
-    output = template.render(body)
+    output = template.render(
+        body,
+        latency=dn42_communities["latency"],
+        bandwidth=dn42_communities["bandwidth"],
+        encryption=dn42_communities["encryption"]
+    )
 
     with open(path, "w") as file:
         file.write(output)

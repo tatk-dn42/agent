@@ -3,14 +3,14 @@ neighbor {{ remote_address }} as {{ remote_as }};
 interface "{{ interface_id }}";
 
 ipv4 {
-import where dn42_import_filter(2,24,34);
-export where dn42_export_filter(2,24,34);
+import where dn42_import_filter({{ latency }},{{ bandwidth }},{{ encryption }});
+export where dn42_export_filter({{ latency }},{{ bandwidth }},{{ encryption }});
 extended next hop on;
 };
 
 ipv6 {
-import where dn42_import_filter(2,24,34);
-export where dn42_export_filter(2,24,34);
+import where dn42_import_filter({{ latency }},{{ bandwidth }},{{ encryption }});
+export where dn42_export_filter({{ latency }},{{ bandwidth }},{{ encryption }});
 extended next hop on;
 };
 }

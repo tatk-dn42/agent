@@ -31,4 +31,4 @@ class Config:
     IPV4_LINK_LOCAL = os.environ.get("IPV4_LINK_LOCAL") or ""
     IPV6_LINK_LOCAL = os.environ.get("IPV6_LINK_LOCAL") or ""
     AUTO_PEER_SESSION_PATH = os.environ.get("AUTO_PEER_SESSION_PATH") or "/data/automation/autopeer/peers"
-    SENTRY_DSN = os.environ.get("SENTRY_DSN") or ""
+    SENTRY_DSN = os.environ.get("SENTRY_DSN") or None

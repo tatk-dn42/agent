@@ -24,3 +24,4 @@ tzdata==2024.2
 Werkzeug==3.0.4
 Flask-JWT-Extended==4.7.1
 sentry-sdk[flask]==2.19.2
+pythonping==1.1.4
