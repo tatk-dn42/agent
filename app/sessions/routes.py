@@ -175,7 +175,7 @@ def create_session(body: SessionBody):
             "message": "Session already exists"
         }, 400
 
-    dn42_communities = helpers.get_dn42_communities(body.remote_address)
+    dn42_communities = helpers.get_dn42_communities(body.remote_address, body.interface_id)
 
     if not dn42_communities:
         return {
