@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Module for Peering related routes"""
-from http.client import responses
 
 from flask import jsonify
 from flask_jwt_extended import jwt_required
@@ -8,8 +7,9 @@ from flask_jwt_extended import jwt_required
 from app.peers import bp
 from app.peers.exceptions import PeerNotFoundException
 from app.peers.responses import PeerResponse, PeerPath
-from app.services import peer as peer_service
 from app.services import helpers
+from app.services import peer as peer_service
+
 
 @bp.get("/", operation_id="get_peers_list", responses={200: {}})
 @jwt_required()
