@@ -190,12 +190,13 @@ def ping(host, interface, ping_count=3) -> dict:
     rtt = {}
 
     if ip.version == 4:
-        output = subprocess.run(["ping", "-c", str(ping_count), "-I", interface, host], capture_output=True,
-                                check=False)
+        output = subprocess.run(["ping", "-c", str(ping_count), "-I", interface, host],
+                                capture_output=True, check=False)
 
     elif ip.version == 6:
-        output = subprocess.run(["ping6", "-c", str(ping_count), "-I", interface, host], capture_output=True,
-                                check=False)
+        output = subprocess.run(["ping6", "-c", str(ping_count), "-I", interface, host],
+                                capture_output=True, check=False)
+
     else:
         return False
 
