@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/tatk-dn42/agent/compare/v0.4.0...v0.5.0) (2024-12-19)
+
+
+### Features
+
+* create and delete sessions ([#29](https://github.com/tatk-dn42/agent/issues/29)) ([998b678](https://github.com/tatk-dn42/agent/commit/998b678f639d73c874cf6375910baebfabe0b318))
+
 ## [0.4.0](https://github.com/tatk-dn42/agent/compare/v0.3.0...v0.4.0) (2024-12-19)
 
 
