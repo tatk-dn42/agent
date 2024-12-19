@@ -71,9 +71,9 @@ def parse_bgp_info(contents):
 
     for line in lines:
         line = line.strip()
-        print(line)
         if line.startswith("BGP state:"):
             bgp_info["bgp_state"] = line.split(":")[1].strip()
+            bgp_info["admin_down"] = True if line.split(":")[1].strip() == "Down" else False
         elif line.startswith("Neighbor address:"):
             neighbor_address = line.split(":",1)[1].strip()
             neighbor_address = neighbor_address.split("%")
@@ -120,7 +120,5 @@ def parse_bgp_info(contents):
                 }
             elif line.startswith("BGP Next hop:"):
                 bgp_info[current_channel]["next_hop"] = line.split(":")[1].strip()
-
-    print(bgp_info)
 
     return bgp_info

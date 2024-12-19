@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module for Peering related routes"""
+from http.client import responses
+
 from flask import jsonify
 from flask_jwt_extended import jwt_required
 
@@ -7,6 +9,7 @@ from app.peers import bp
 from app.peers.exceptions import PeerNotFoundException
 from app.peers.responses import PeerResponse, PeerPath
 from app.services import peer as peer_service
+from app.services import helpers
 
 @bp.get("/", operation_id="get_peers_list", responses={200: {}})
 @jwt_required()
@@ -43,3 +46,60 @@ def get_peer(path: PeerPath):
         }, 404
 
     return jsonify(PeerResponse.model_validate(peer_detail).model_dump())
+
+
+@bp.post("/<id>/disable", operation_id="disable_peer", responses={})
+@jwt_required()
+def disable_peer(path: PeerPath):
+    """Disable peer
+    Disables given peer
+    """
+
+    try:
+        peer = peer_service.get_peer_detail(path.id)
+    except PeerNotFoundException:
+        return {
+            "code": 404,
+            "message": "Peer not found"
+        }, 404
+
+    if peer["bgp_state"] == "Down":
+        return {
+            "code": 422,
+            "message": "Peer is already disabled"
+        }, 422
+
+    helpers.run_bird_command(f"disable {path.id}", restricted=False)
+
+    return {
+        "code": 200,
+        "message": "Peer has been disabled"
+    }, 200
+
+@bp.post("/<id>/enable", operation_id="enable_peer", responses={})
+@jwt_required()
+def enable_peer(path: PeerPath):
+    """Enable peer
+    Enables given peer
+    """
+
+    try:
+        peer = peer_service.get_peer_detail(path.id)
+    except PeerNotFoundException:
+        return {
+            "code": 404,
+            "message": "Peer not found"
+        }, 404
+
+    if peer["bgp_state"] != "Down":
+        return {
+            "code": 422,
+            "message": "Peer is already enabled"
+        }, 422
+
+    helpers.run_bird_command(f"enable {path.id}", restricted=False)
+
+    return {
+        "code": 200,
+        "message": "Peer has been enabled"
+    }, 200
