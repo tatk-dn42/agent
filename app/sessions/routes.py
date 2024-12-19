@@ -201,7 +201,7 @@ def create_session(body: SessionBody):
         helpers.run_bird_command("configure", restricted=False)
 
     else:
-        # os.remove(path)
+        os.remove(path)
 
         return {
             "code": 400,
