@@ -47,3 +47,4 @@ jobs:
           VALIDATE_PYTHON_MYPY: false
           VALIDATE_PYTHON_BLACK: false
           VALIDATE_NATURAL_LANGUAGE: false
+          MARKDOWN_CONFIG_FILE: .markdownlint.json
