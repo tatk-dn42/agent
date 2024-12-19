@@ -29,7 +29,8 @@ def get_session_list():
     return jsonify(peer_list)
 
 
-@bp.get("/<id>", operation_id="get_session", responses={200: SessionResponse}, security=[{"jwt": []}])
+@bp.get("/<id>", operation_id="get_session", responses={200: SessionResponse},
+        security=[{"jwt": []}])
 @jwt_required()
 def get_session(path: SessionPath):
     """Get Session Details
