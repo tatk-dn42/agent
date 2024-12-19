@@ -1,3 +1,4 @@
+# pylint: disable=too-many-branches
 # -*- coding: utf-8 -*-
 """Module providing helper functions for processing"""
 

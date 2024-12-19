@@ -3,5 +3,3 @@
 
 class PeerNotFoundException(Exception):
     """Exception thrown when a given peer cannot be found"""
-
-    pass
