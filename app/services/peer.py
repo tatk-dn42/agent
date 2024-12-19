@@ -2,52 +2,22 @@
 # -*- coding: utf-8 -*-
 """Module providing services to get Peer related information from the node"""
 
-import re
-import subprocess
 from flask import current_app
 
+from app.peers.exceptions import PeerNotFoundException
+from app.services import helpers
 
-def parse_protocols_output(contents):
+
+def get_peers() -> list:
     """
-    Parses the output of the Bird "Protocols" command.
-
-            Parameters:
-                    contents: Contents of the command output
+    Returns the list of automatic BGP peers on the node.
 
             Returns:
-                    output (list): List containing list items for each protocol
+                    peers (list): List of peers
     """
 
-    output = []
-
-    for line in contents:
-        line = line.decode("utf-8")
-        line = line.strip("\n")
-
-        if line.startswith("BIRD") or line.startswith("Name") or line.startswith("Access"):
-            continue
-
-        output.append(re.split(r"\s+(?=\S)", line, maxsplit=6))
-
-    return output
-
-
-def get_peer_count() -> int:
-    """
-    Returns the count of automatic BGP peers on the node.
-
-            Returns:
-                    peers (int): Count of peers
-    """
-
-    protocols = subprocess.Popen(["birdc", "show protocols"], stdout=subprocess.PIPE)
-
-    peers = parse_protocols_output(protocols.stdout)
-    protocols.stdout.close()
-    protocols.wait()
-
-    protocols.stdout.close()
-    protocols.wait()
+    peer_command = helpers.run_command("birdc show protocols")
+    peers = helpers.parse_protocols_output(peer_command)
 
     peers = [
         peer
@@ -56,4 +26,20 @@ def get_peer_count() -> int:
            and peer[0].startswith(current_app.config["AUTO_PEER_PREFIX"])
     ]
 
-    return len(peers)
+    return peers
+
+
+def get_peer_detail(peer) -> dict:
+    """
+    Fetches the detailed information about a Bird Peer
+
+            Returns:
+                    peers (dict): List of peers
+    """
+
+    peer_command = helpers.run_command(f"birdc show protocols all {peer}")
+
+    if "CF_SYM_UNDEFINED" in peer_command:
+        raise PeerNotFoundException("Peer not found")
+
+    return helpers.parse_bgp_info(peer_command)

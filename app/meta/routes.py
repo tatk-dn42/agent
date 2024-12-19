@@ -3,6 +3,7 @@
 
 from pathlib import Path
 from flask import current_app, jsonify
+from flask_jwt_extended import jwt_required, get_jwt
 
 from app.meta import bp
 from app.services import ip_address, peer
@@ -17,7 +18,7 @@ def info():
 
     loopback_interface = current_app.config["LOOPBACK_INTERFACE"]
     loopback_ips = ip_address.get_loopback_addresses(loopback_interface)
-    peer_count = peer.get_peer_count()
+    peer_count = len(peer.get_peers())
 
     protocols = {}
     link_local_ips = {}
@@ -45,6 +46,18 @@ def info():
             loopback_ips=loopback_ips,
             link_local_ips=link_local_ips,
             peering_policy=current_app.config["PEERING_POLICY"],
+            peering_method=current_app.config["PEERING_METHOD"],
             protocols=protocols,
         ).model_dump()
     )
+
+@bp.get("/whoami", operation_id="who_am_i", responses={})
+@jwt_required()
+def whoami():
+    """Get current auth user
+    Gets information for current user
+    """
+
+    current_user = get_jwt()
+
+    return(jsonify(current_user))

@@ -1,0 +1,2 @@
+class PeerNotFoundException(Exception):
+    pass

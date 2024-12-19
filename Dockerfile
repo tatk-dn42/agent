@@ -13,11 +13,16 @@ COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 RUN mkdir -p /run/bird \
-  && chown -R app /app \
-  && chown -R app /run/bird \
-    
+  && chown -R app: /app \
+  && chown -R app: /run/bird
+
+COPY bird_config/* /etc/bird
+RUN usermod -a -G bird app
+
+
 USER app
 
+CMD bird
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
 
 EXPOSE 5000
