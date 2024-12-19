@@ -192,7 +192,7 @@ def create_session(body: SessionBody):
         encryption=dn42_communities["encryption"]
     )
 
-    with open(path, "w") as file:
+    with open(path, "w", encoding="utf-8") as file:
         file.write(output)
 
     config_check = helpers.run_bird_command("configure check", restricted=False)
