@@ -103,3 +103,49 @@ def enable_peer(path: PeerPath):
         "code": 200,
         "message": "Peer has been enabled"
     }, 200
+
+
+@bp.post("/<id>/restart", operation_id="restart_peer", responses={})
+@jwt_required()
+def restart_peer(path: PeerPath):
+    """Restart peer
+    Restart given peer
+    """
+
+    try:
+        peer = peer_service.get_peer_detail(path.id)
+    except PeerNotFoundException:
+        return {
+            "code": 404,
+            "message": "Peer not found"
+        }, 404
+
+    helpers.run_bird_command(f"restart {path.id}", restricted=False)
+
+    return {
+        "code": 200,
+        "message": "Peer has been restarted"
+    }, 200
+
+
+@bp.post("/<id>/reload", operation_id="reload_peer", responses={})
+@jwt_required()
+def reload_peer(path: PeerPath):
+    """Reload peer
+    Reload given peer
+    """
+
+    try:
+        peer = peer_service.get_peer_detail(path.id)
+    except PeerNotFoundException:
+        return {
+            "code": 404,
+            "message": "Peer not found"
+        }, 404
+
+    helpers.run_bird_command(f"reload {path.id}", restricted=False)
+
+    return {
+        "code": 200,
+        "message": "Peer has been reloaded"
+    }, 200
