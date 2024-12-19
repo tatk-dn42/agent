@@ -6,6 +6,9 @@ import re
 import shlex
 import subprocess
 
+from pythonping import ping
+
+
 def run_bird_command(command, timeout=3, restricted=True):
     """
         Runs a Bird command and retrieves the output.
@@ -122,3 +125,46 @@ def parse_bgp_info(contents):
                 bgp_info[current_channel]["next_hop"] = line.split(":")[1].strip()
 
     return bgp_info
+
+
+def get_dn42_communities(endpoint):
+    """
+    Processes DN42 Endpoint to produce BGP communities.
+
+            Parameters:
+                    endpoint (str): Endpoint to check
+
+            Returns:
+                    communities (dict): Dict containing community info
+    """
+
+    ping_output = ping(endpoint, count=3)
+
+    if ping_output.stats_packets_returned == 0:
+        return False
+
+    match ping_output.rtt_avg_ms:
+        case num if 0 <= num < 2.7:
+            latency = 1
+        case num if 2.7 <= num < 7.3:
+            latency = 2
+        case num if 7.3 <= num < 20:
+            latency = 3
+        case num if 20 <= num < 55:
+            latency = 4
+        case num if 55 <= num < 148:
+            latency = 5
+        case num if 148 <= num < 403:
+            latency = 6
+        case num if 403 <= num < 1097:
+            latency = 7
+        case num if 1097 <= num < 2981:
+            latency = 8
+        case _:
+            latency = 9
+
+    return {
+        "latency": latency,
+        "bandwidth": 24,
+        "encryption": 34
+    }

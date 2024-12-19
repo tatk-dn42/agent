@@ -1,0 +1,16 @@
+protocol bgp {{ session_id }} from dn42_peer {
+neighbor {{ remote_address }} as {{ remote_as }};
+interface "{{ interface_id }}";
+
+ipv4 {
+import where dn42_import_filter({{ latency }},{{ bandwidth }},{{ encryption }});
+export where dn42_export_filter({{ latency }},{{ bandwidth }},{{ encryption }});
+extended next hop on;
+};
+
+ipv6 {
+import where dn42_import_filter({{ latency }},{{ bandwidth }},{{ encryption }});
+export where dn42_export_filter({{ latency }},{{ bandwidth }},{{ encryption }});
+extended next hop on;
+};
+}

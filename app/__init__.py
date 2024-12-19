@@ -2,6 +2,7 @@
 # pylint: disable=import-outside-toplevel
 """Module for Flask Web App"""
 
+import sentry_sdk
 from flask_openapi3 import OpenAPI, Info
 
 from app.meta import bp as meta_bp
@@ -11,6 +12,14 @@ from config import Config
 
 def create_app(config_class=Config):
     """Flask App Factory Instance"""
+
+    sentry_sdk.init(
+        dsn=Config.SENTRY_DSN,
+        traces_sample_rate=1.0,
+        _experiments={
+            "continuous_profiling_auto_start": True,
+        },
+    )
 
     info = Info(
         title="TATK Network Agent",
