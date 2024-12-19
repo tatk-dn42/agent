@@ -25,6 +25,7 @@ class PeerResponse(BaseModel):
     remote_address: str = Field("10.20.30.40", description="Remote neighbor address")
     local_address: str = Field("10.20.30.40", description="Local address")
     bgp_state: str = Field("Idle", description="State of BGP Session")
+    admin_down: bool = Field(False, description="Is BGP session administratively down")
 
     ipv4: dict = ChannelResponse()
     ipv6: dict = ChannelResponse()
