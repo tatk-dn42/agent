@@ -43,4 +43,3 @@ def get_peer(path: PeerPath):
         }, 404
 
     return jsonify(PeerResponse.model_validate(peer_detail).model_dump())
-

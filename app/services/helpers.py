@@ -1,9 +1,26 @@
+# -*- coding: utf-8 -*-
+"""Module providing helper functions for processing"""
+
 import re
 import shlex
 import subprocess
 
-def run_command(command, timeout=3):
+def run_bird_command(command, timeout=3, restricted=True):
+    """
+        Runs a Bird command and retrieves the output.
+
+                Parameters:
+                        command (str): Bird command to run
+                        timeout (int): Command timeout in seconds
+                        restricted (bool): Whether to run command in restricted mode
+
+                Returns:
+                        output (str): Command output
+        """
     try:
+        bird_prefix = 'birdc -r ' if restricted else 'birdc '
+        command = bird_prefix + command
+
         output = (
             subprocess.check_output(shlex.split(command), timeout=timeout, stderr=subprocess.STDOUT)
             .decode('utf-8')
@@ -36,8 +53,18 @@ def parse_protocols_output(contents):
 
     return output
 
-def parse_bgp_info(text):
-    lines = text.split("\n")
+def parse_bgp_info(contents):
+    """
+    Parses the output of the Bird "Protocols All" command.
+
+            Parameters:
+                    contents (str): Contents of the command output
+
+            Returns:
+                    bgp_info (dict): Dict containing protocol info
+    """
+
+    lines = contents.split("\n")
     bgp_info = {"timer": {}}
     current_channel = None
 

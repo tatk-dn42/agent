@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=import-outside-toplevel
 """Module for Flask Web App"""
 
 from flask_openapi3 import OpenAPI, Info

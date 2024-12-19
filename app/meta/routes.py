@@ -60,4 +60,4 @@ def whoami():
 
     current_user = get_jwt()
 
-    return(jsonify(current_user))
+    return jsonify(current_user)

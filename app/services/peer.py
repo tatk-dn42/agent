@@ -16,7 +16,7 @@ def get_peers() -> list:
                     peers (list): List of peers
     """
 
-    peer_command = helpers.run_command("birdc show protocols")
+    peer_command = helpers.run_bird_command("show protocols")
     peers = helpers.parse_protocols_output(peer_command)
 
     peers = [
@@ -37,7 +37,7 @@ def get_peer_detail(peer) -> dict:
                     peers (dict): List of peers
     """
 
-    peer_command = helpers.run_command(f"birdc show protocols all {peer}")
+    peer_command = helpers.run_bird_command(f"show protocols all {peer}")
 
     if "CF_SYM_UNDEFINED" in peer_command:
         raise PeerNotFoundException("Peer not found")

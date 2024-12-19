@@ -30,4 +30,6 @@ class PeerResponse(BaseModel):
     ipv6: dict = ChannelResponse()
 
 class PeerPath(BaseModel):
+    """Path class for searching peers"""
+
     id: str = Field(..., description='Peer ID')
