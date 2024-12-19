@@ -114,7 +114,7 @@ def restart_peer(path: PeerPath):
     """
 
     try:
-        peer = peer_service.get_peer_detail(path.id)
+        peer_service.get_peer_detail(path.id)
     except PeerNotFoundException:
         return {
             "code": 404,
@@ -137,7 +137,7 @@ def reload_peer(path: PeerPath):
     """
 
     try:
-        peer = peer_service.get_peer_detail(path.id)
+        peer_service.get_peer_detail(path.id)
     except PeerNotFoundException:
         return {
             "code": 404,
