@@ -33,3 +33,4 @@ class Config:
     AUTO_PEER_SESSION_PATH = (os.environ.get("AUTO_PEER_SESSION_PATH")
                               or "/data/automation/autopeer/peers")
     SENTRY_DSN = os.environ.get("SENTRY_DSN") or None
+    SENTRY_RELEASE = Path("version.txt").read_text(encoding="utf-8").strip("\n")
