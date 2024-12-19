@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/tatk-dn42/agent/compare/v0.3.0...v0.4.0) (2024-12-19)
+
+
+### Features
+
+* Rename peers to sessions ([#27](https://github.com/tatk-dn42/agent/issues/27)) ([e55e18f](https://github.com/tatk-dn42/agent/commit/e55e18f5775417e7ccc4d2cfddb600f67e800d39))
+
 ## [0.3.0](https://github.com/tatk-dn42/agent/compare/v0.2.1...v0.3.0) (2024-12-19)
 
 
