@@ -13,6 +13,12 @@ class PeeringPolicy(str, Enum):
     SELECTIVE = "Selective"
     CLOSED = "Closed"
 
+class PeeringMethod(str, Enum):
+    """Class for PeeringMethod Enum"""
+
+    MAN = "Manual"
+    AUTO = "Automatic"
+
 
 class InfoResponse(BaseModel):
     """Class for InfoResponse schema"""
@@ -31,4 +37,5 @@ class InfoResponse(BaseModel):
         {"ipv4": "203.0.113.123", "ipv6": "2001:0db8:0000:0000:0000:0000:0000:0000"}
     )
     peering_policy: PeeringPolicy = PeeringPolicy.OPEN
+    peering_method: PeeringMethod = PeeringMethod.AUTO
     protocols: dict = Field({"wireguard": {"enabled": True, "public_key": ""}})

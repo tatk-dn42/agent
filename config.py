@@ -20,6 +20,7 @@ class Config:
     PEER_LIMIT = os.environ.get("PEER_LIMIT") or 50
     LOOPBACK_INTERFACE = os.environ.get("LOOPBACK_INTERFACE") or "internal-dummy0"
     PEERING_POLICY = os.environ.get("PEERING_POLICY") or "Open"
+    PEERING_METHOD = os.environ.get("PEERING_METHOD") or "Automatic"
     WIREGUARD_ENABLED = bool(os.environ.get("WIREGUARD_ENABLED")) or False
     WIREGUARD_PUBKEY_PATH = (
         os.environ.get("WIREGUARD_PUBKEY_PATH") or "/etc/wireguard/publickey"

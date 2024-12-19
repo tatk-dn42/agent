@@ -13,9 +13,12 @@ COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 RUN mkdir -p /run/bird \
-  && chown -R app /app \
-  && chown -R app /run/bird \
-    
+  && chown -R app: /app \
+  && chown -R app: /run/bird
+
+COPY bird_config/* /etc/bird
+RUN usermod -a -G bird app
+
 USER app
 
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
@@ -23,4 +26,4 @@ CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
 EXPOSE 5000
 
 HEALTHCHECK --interval=5m --timeout=3s \
-  CMD curl -f http://localhost:5000 || exit 1
+  CMD curl -f http://localhost:5000/api/meta/info || exit 1
