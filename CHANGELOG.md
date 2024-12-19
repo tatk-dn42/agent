@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/tatk-dn42/agent/compare/v0.2.1...v0.3.0) (2024-12-19)
+
+
+### Features
+
+* Add ability to enable and disable BGP sessions ([#24](https://github.com/tatk-dn42/agent/issues/24)) ([bb66fd3](https://github.com/tatk-dn42/agent/commit/bb66fd374da3d0b921a224cb9dd1d1b29c4063ae))
+
+
+### Bug Fixes
+
+* Reload peers ([#26](https://github.com/tatk-dn42/agent/issues/26)) ([45b5a4e](https://github.com/tatk-dn42/agent/commit/45b5a4e1d4d9a28d3c977a6f8221e0d098593991))
+
 ## [0.2.1](https://github.com/tatk-dn42/agent/compare/v0.2.0...v0.2.1) (2024-12-19)
 
 
