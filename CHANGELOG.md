@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/tatk-dn42/agent/compare/v0.1.2...v0.2.0) (2024-12-19)
+
+
+### Features
+
+* Add peer status endpoints and JWT auth ([#19](https://github.com/tatk-dn42/agent/issues/19)) ([9881fce](https://github.com/tatk-dn42/agent/commit/9881fcef8835a39e891d636ede8645168f27672a))
+
 ## [0.1.2](https://github.com/tatk-dn42/agent/compare/v0.1.1...v0.1.2) (2024-09-25)
 
 
