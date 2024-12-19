@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/tatk-dn42/agent/compare/v0.5.1...v0.5.2) (2024-12-19)
+
+
+### Bug Fixes
+
+* Sentry Release ([#33](https://github.com/tatk-dn42/agent/issues/33)) ([e41c2b7](https://github.com/tatk-dn42/agent/commit/e41c2b796b880c1fd4c23820792ee46d230ff537))
+
 ## [0.5.1](https://github.com/tatk-dn42/agent/compare/v0.5.0...v0.5.1) (2024-12-19)
 
 
