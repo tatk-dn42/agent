@@ -18,7 +18,7 @@ class WgPeerResponse(BaseModel):
     endpoint: str = Field("", description="Endpoint of Peer")
     handshake: str = Field("", description="Last Handshake")
     public_key: str = Field("", description="Public Key of Peer")
-    allowed_ips: list[str]
+    allowed_ips: list = [str]
     transfer: dict = {"sent": str, "received": str}
 
 
