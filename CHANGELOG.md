@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/tatk-dn42/agent/compare/v0.5.2...v0.6.0) (2024-12-21)
+
+
+### Features
+
+* List and get tunnel details ([#37](https://github.com/tatk-dn42/agent/issues/37)) ([b74a9f5](https://github.com/tatk-dn42/agent/commit/b74a9f51810a5ca93040e7c36f9259d88fce1fbd))
+
 ## [0.5.2](https://github.com/tatk-dn42/agent/compare/v0.5.1...v0.5.2) (2024-12-19)
 
 
