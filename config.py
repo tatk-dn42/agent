@@ -26,7 +26,7 @@ class Config:
     WIREGUARD_PUBKEY_PATH = (
         os.environ.get("WIREGUARD_PUBKEY_PATH") or "/etc/wireguard/publickey"
     )
-    AUTO_PEER_PREFIX = os.environ.get("AUTO_PEER_PREFIX") or "dn42_"
+    AUTO_PEER_PREFIX = os.environ.get("AUTO_PEER_PREFIX") or "dn42"
     API_DOCS_ENABLED = bool(os.environ.get("API_DOCS_ENABLED")) or False
     IPV4_LINK_LOCAL = os.environ.get("IPV4_LINK_LOCAL") or ""
     IPV6_LINK_LOCAL = os.environ.get("IPV6_LINK_LOCAL") or ""

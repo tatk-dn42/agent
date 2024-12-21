@@ -21,16 +21,16 @@ def run_bird_command(command, timeout=3, restricted=True) -> str:
                         output (str): Command output
         """
     try:
-        bird_prefix = 'birdc -r ' if restricted else 'birdc '
+        bird_prefix = "birdc -r " if restricted else "birdc "
         command = bird_prefix + command
 
         output = (
             subprocess.check_output(shlex.split(command), timeout=timeout, stderr=subprocess.STDOUT)
-            .decode('utf-8')
+            .decode("utf-8")
             .strip()
         )
     except subprocess.CalledProcessError as e:
-        output = e.output.decode('utf-8').strip()
+        output = e.output.decode("utf-8").strip()
     return output
 
 
@@ -211,3 +211,71 @@ def ping(host, interface, ping_count=3) -> dict:
             rtt["average"] = line.split('=')[1].split('/')[2]
 
     return rtt
+
+
+def run_wg_command(command, timeout=3) -> str:
+    """
+        Runs a Bird command and retrieves the output.
+
+                Parameters:
+                        command (str): Bird command to run
+                        timeout (int): Command timeout in seconds
+
+                Returns:
+                        output (str): Command output
+        """
+    try:
+        command = "sudo wg " + command
+
+        output = (
+            subprocess.check_output(shlex.split(command), timeout=timeout, stderr=subprocess.STDOUT)
+            .decode('utf-8')
+            .strip()
+        )
+    except subprocess.CalledProcessError as e:
+        output = e.output.decode('utf-8').strip()
+    return output
+
+
+def parse_wg_output(contents) -> dict:
+    """
+    Parses the output of the wg show command.
+
+            Parameters:
+                    contents (str): Contents of the command output
+
+            Returns:
+                    bgp_info (dict): Dict containing protocol info
+    """
+
+    # current_app.logger.debug(contents)
+
+    lines = contents.split("\n")
+    wg_info = {
+        "peer": {}
+    }
+
+    for line in lines:
+        line = line.strip()
+
+        if line.startswith("interface:"):
+            wg_info["interface_id"] = line.split(":")[1].strip()
+        elif line.startswith("public key:"):
+            wg_info["public_key"] = line.split(":")[1].strip()
+        elif line.startswith("listening port:"):
+            wg_info["port"] = line.split(":")[1].strip()
+        elif line.startswith("peer:"):
+            wg_info["peer"]["public_key"] = line.split(":")[1].strip()
+        elif line.startswith("endpoint:"):
+            wg_info["peer"]["endpoint"] = line.split(":", 1)[1].strip()
+        elif line.startswith("allowed ips:"):
+            wg_info["peer"]["allowed_ips"] = line.split(":", 1)[1].strip().split(",")
+        elif line.startswith("latest handshake:"):
+            wg_info["peer"]["handshake"] = line.split(":", 1)[1].strip()
+        elif line.startswith("transfer:"):
+            transfer = line.split(":", 1)[1].strip().split(",")
+            received = transfer[0].split(" ")[0] + transfer[0].split(" ")[1]
+            sent = transfer[1].strip().split(" ")[0] + transfer[1].strip().split(" ")[1]
+            wg_info["peer"]["transfer"] = {"received": received, "sent": sent}
+
+    return wg_info

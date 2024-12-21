@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Module providing services to get IP Address related information from the node"""
 
-import netifaces as ni
+import netifaces
 
 
 def get_loopback_addresses(interface_name: str) -> object:
@@ -18,8 +18,10 @@ def get_loopback_addresses(interface_name: str) -> object:
 
     # TODO: Handle nodes with or without v4/v6
 
-    ipv4 = ni.ifaddresses(interface_name)[ni.AF_INET][0]["addr"]
-    ipv6 = ni.ifaddresses(interface_name)[ni.AF_INET6][0]["addr"]
+    print(netifaces.ifaddresses(interface_name))
+
+    ipv4 = netifaces.ifaddresses(interface_name)[netifaces.AF_INET][0]["addr"]
+    ipv6 = netifaces.ifaddresses(interface_name)[netifaces.AF_INET6][0]["addr"]
 
     ip_object = {
         "ipv4": ipv4,
