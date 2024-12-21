@@ -2,11 +2,14 @@
 # pylint: disable=import-outside-toplevel
 """Module for Flask Web App"""
 
+import logging
+
 import sentry_sdk
 from flask_openapi3 import OpenAPI, Info
 
 from app.meta import bp as meta_bp
 from app.sessions import bp as peers_bp
+from app.tunnels import bp as tunnels_bp
 from config import Config
 
 
@@ -48,11 +51,17 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
 
     # Initialize Flask extensions here
+    if __name__ != "__main__":
+        gunicorn_logger = logging.getLogger("gunicorn.error")
+        app.logger.handlers = gunicorn_logger.handlers
+        app.logger.setLevel(gunicorn_logger.level)
+
     from flask_jwt_extended import JWTManager
     jwt = JWTManager(app)
 
     # Register routes here
     app.register_api(meta_bp)
     app.register_api(peers_bp)
+    app.register_api(tunnels_bp)
 
     return app
