@@ -29,10 +29,10 @@ def get_tunnel_list():
     return jsonify(tunnel_list)
 
 
-@bp.get("/<id>", operation_id="get_tunnek", responses={200: TunnelResponse},
+@bp.get("/<id>", operation_id="get_tunnel", responses={200: TunnelResponse},
         security=[{"jwt": []}])
 @jwt_required()
-def get_session(path: TunnelPath):
+def get_tunnel(path: TunnelPath):
     """Get Tunnel Details
     Gets details of a tunnel from node
     """

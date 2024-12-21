@@ -34,6 +34,5 @@ def get_tunnel_details(tunnel: str) -> dict:
         """
 
     tunnel_command = helpers.parse_wg_output(helpers.run_wg_command(f"show {tunnel}"))
-    interface_details = netifaces.interfaces()
 
     return tunnel_command
