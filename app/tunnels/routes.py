@@ -131,8 +131,11 @@ def delete_tunnel(path: TunnelPath):
     tunnel_path = current_app.config["AUTO_PEER_TUNNEL_PATH"] + f"{path.id}.conf"
     interface_path = current_app.config["AUTO_PEER_INTERFACE_PATH"] + f"42-{path.id}"
 
-    os.remove(tunnel_path)
-    os.remove(interface_path)
+    try:
+        os.remove(tunnel_path)
+        os.remove(interface_path)
+    except OSError as e:
+        current_app.logger.error(f"Error deleting tunnel files: {e}")
 
     helpers.ip_link_del(path.id)
 
