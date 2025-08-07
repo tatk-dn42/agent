@@ -3,6 +3,7 @@
 """Module providing config to Flask App"""
 
 import os
+import logging
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -32,5 +33,10 @@ class Config:
     IPV6_LINK_LOCAL = os.environ.get("IPV6_LINK_LOCAL") or ""
     AUTO_PEER_SESSION_PATH = (os.environ.get("AUTO_PEER_SESSION_PATH")
                               or "/data/automation/autopeer/peers")
+    AUTO_PEER_TUNNEL_PATH = (os.environ.get("AUTO_PEER_TUNNEL_PATH")
+                              or "/etc/wireguard/")
+    AUTO_PEER_INTERFACE_PATH = (os.environ.get("AUTO_PEER_INTERFACE_PATH")
+                              or "/data/automation/interfaces/")
     SENTRY_DSN = os.environ.get("SENTRY_DSN") or None
     SENTRY_RELEASE = Path("version.txt").read_text(encoding="utf-8").strip("\n")
+    LOG_LEVEL = getattr(logging, os.getenv("LOG_LEVEL", "WARNING").upper(), logging.WARNING)

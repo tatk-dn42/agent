@@ -19,7 +19,7 @@ from app.sessions.responses import SessionPath, SessionResponse
 @bp.get("/", operation_id="get_session_list", responses={200: {}}, security=[{"jwt": []}])
 @jwt_required()
 def get_session_list():
-    """Get list of sessions
+    """Get All Sessions
     Gets list of BGP sessions from node
     """
 
@@ -57,7 +57,7 @@ def get_session(path: SessionPath):
 @bp.post("/<id>/disable", operation_id="disable_session", responses={}, security=[{"jwt": []}])
 @jwt_required()
 def disable_session(path: SessionPath):
-    """Disable session
+    """Disable Session
     Disables given BGP session
     """
 
@@ -86,7 +86,7 @@ def disable_session(path: SessionPath):
 @bp.post("/<id>/enable", operation_id="enable_session", responses={}, security=[{"jwt": []}])
 @jwt_required()
 def enable_session(path: SessionPath):
-    """Enable session
+    """Enable Session
     Enables given BGP session
     """
 
@@ -115,7 +115,7 @@ def enable_session(path: SessionPath):
 @bp.post("/<id>/restart", operation_id="restart_session", responses={}, security=[{"jwt": []}])
 @jwt_required()
 def restart_session(path: SessionPath):
-    """Restart session
+    """Restart Session
     Restart given BGP session
     """
 
@@ -138,7 +138,7 @@ def restart_session(path: SessionPath):
 @bp.post("/<id>/reload", operation_id="reload_session", responses={}, security=[{"jwt": []}])
 @jwt_required()
 def reload_session(path: SessionPath):
-    """Reload session
+    """Reload Session
     Reload given BGP session
     """
 
@@ -161,11 +161,9 @@ def reload_session(path: SessionPath):
 @bp.post("/", operation_id="create_session", responses={}, security=[{"jwt": []}])
 @jwt_required()
 def create_session(body: SessionBody):
-    """Create session
+    """Create Session
     Creates a new session
     """
-
-    # TODO: Check if interface exists
 
     path = current_app.config["AUTO_PEER_SESSION_PATH"] + f"/{body.session_id}.conf"
 

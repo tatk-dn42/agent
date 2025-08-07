@@ -1,0 +1,11 @@
+[Interface]
+ListenPort = {{ local_port }}
+
+[Peer]
+PublicKey = {{ public_key }}
+{% if pre_shared_key != "" %} PresharedKey = {{ pre_shared_key }}
+{% endif %}
+{% if endpoint != "" %}
+Endpoint = {{ endpoint }}:{{ remote_port }}
+{% endif %}
+AllowedIPs = {{ allowed_ips }}

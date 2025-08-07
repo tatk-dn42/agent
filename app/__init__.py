@@ -50,11 +50,13 @@ def create_app(config_class=Config):
 
     app.config.from_object(config_class)
 
+    app.logger.setLevel(Config.LOG_LEVEL)
+
     # Initialize Flask extensions here
-    if __name__ != "__main__":
-        gunicorn_logger = logging.getLogger("gunicorn.error")
-        app.logger.handlers = gunicorn_logger.handlers
-        app.logger.setLevel(gunicorn_logger.level)
+    # if __name__ != "__main__":
+    #     gunicorn_logger = logging.getLogger("gunicorn.error")
+    #     app.logger.handlers = gunicorn_logger.handlers
+    #     app.logger.setLevel(gunicorn_logger.level)
 
     from flask_jwt_extended import JWTManager
     jwt = JWTManager(app)

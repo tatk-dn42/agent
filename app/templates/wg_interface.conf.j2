@@ -1,0 +1,35 @@
+{%- set ifname = peer_info.name -%}
+{%- if peer_info.ip_addresses.ipv6.local -%}
+{%- set local_v6 = peer_info.ip_addresses.ipv6.local -%}
+{% elif peer_info.ip_addresses.ipv6.remote and peer_info.ip_addresses.ipv6.remote.startswith('fe80:') %}
+{%- set local_v6 = link_local_ips.ipv6 -%}
+{% else %}
+{%- set local_v6 = loopback_ips.ipv6 -%}
+{%- endif -%}
+
+{%- if peer_info.ip_addresses.ipv4.local -%}
+{%- set local_v4 = peer_info.ip_addresses.ipv4.local -%}
+{% else %}
+{%- set local_v4 = loopback_ips.ipv4 -%}
+{%- endif -%}
+
+auto {{ ifname }}
+iface {{ ifname }} inet static
+    address {{ local_v4 }}
+{% if peer_info.ip_addresses.ipv4.remote %}
+    pointopoint {{ peer_info.ip_addresses.ipv4.remote }}
+{% endif %}
+{% if 'mtu' in peer_info %}
+    mtu {{ peer_info.mtu }}
+{% endif %}
+    pre-up ip link add {{ ifname }} type wireguard
+    pre-up timeout 8 wg setconf {{ ifname }} /etc/wireguard/{{ ifname }}.conf
+    pre-up wg set {{ ifname }} private-key /etc/wireguard/privatekey
+{% if peer_info.ip_addresses.ipv6.remote %}
+    post-up ip -6 addr add {{ local_v6 }} peer {{ peer_info.ip_addresses.ipv6.remote }} dev {{ ifname }}
+{% elif peer_info.ip_addresses.ipv6.local %}
+    post-up ip -6 addr add {{ local_v6 }} dev {{ ifname }}
+{% endif %}
+    post-up sysctl -w net.ipv4.conf.{{ ifname }}.accept_local=1
+    post-up tc qdisc add dev {{ ifname }} root tbf rate 20mbit latency 10ms burst 20000
+    post-down ip link del {{ ifname }}

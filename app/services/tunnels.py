@@ -6,6 +6,7 @@ import netifaces
 from flask import current_app
 
 from app.services import helpers
+from app.tunnels.exceptions import TunnelNotFoundException
 
 
 def get_tunnels() -> list:
@@ -33,6 +34,12 @@ def get_tunnel_details(tunnel: str) -> dict:
                         tunnel (dict): Tunnel details
         """
 
-    tunnel_command = helpers.parse_wg_output(helpers.run_wg_command(f"show {tunnel}"))
+    command_output = helpers.run_wg_command(f"show {tunnel}")
 
-    return tunnel_command
+    if "No such device" in command_output:
+        current_app.logger.warning(f"Tunnel {tunnel} not found")
+        raise TunnelNotFoundException(f"Tunnel {tunnel} not found")
+
+    parsed_output = helpers.parse_wg_output(command_output)
+
+    return parsed_output
