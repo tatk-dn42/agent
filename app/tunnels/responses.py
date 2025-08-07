@@ -26,7 +26,6 @@ class TunnelResponse(BaseModel):
     """Class for TunnelResponse schema"""
 
     tunnel_id: str = Field("", description="ID of Tunnel")
-    interface_id: str = Field("", description="ID of Interface")
     tunnel_type: TunnelType = TunnelType.WIREGUARD
     port: int = Field("", description="Listen Port")
     public_key: str = Field("", description="Public Key")

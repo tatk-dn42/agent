@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 """Module providing helper functions for processing"""
 
-import ipaddress
 import re
 import shlex
+import ipaddress
 import subprocess
-
 
 def run_bird_command(command, timeout=3, restricted=True) -> str:
     """
@@ -215,10 +214,10 @@ def ping(host, interface, ping_count=3) -> dict:
 
 def run_wg_command(command, timeout=3) -> str:
     """
-        Runs a Bird command and retrieves the output.
+        Runs a Wireguard command and retrieves the output.
 
                 Parameters:
-                        command (str): Bird command to run
+                        command (str): Wireguard command to run
                         timeout (int): Command timeout in seconds
 
                 Returns:
@@ -259,7 +258,7 @@ def parse_wg_output(contents) -> dict:
         line = line.strip()
 
         if line.startswith("interface:"):
-            wg_info["interface_id"] = line.split(":")[1].strip()
+            wg_info["tunnel_id"] = line.split(":")[1].strip()
         elif line.startswith("public key:"):
             wg_info["public_key"] = line.split(":")[1].strip()
         elif line.startswith("listening port:"):
@@ -279,3 +278,88 @@ def parse_wg_output(contents) -> dict:
             wg_info["peer"]["transfer"] = {"received": received, "sent": sent}
 
     return wg_info
+
+
+def ifup(interface, timeout=3, force=False) -> str:
+    """
+        Runs an ifup command and retrieves the output.
+
+                Parameters:
+                        interface (str): Interface name to bring up
+                        timeout (int): Command timeout in seconds
+                        force (bool): Force the interface up
+
+                Returns:
+                        output (str): Command output
+        """
+    try:
+        if force:
+            command = f"sudo ifup {interface} --interfaces=/data/automation/interfaces-dn42 --force"
+        else:
+            command = f"sudo ifup {interface} --interfaces=/data/automation/interfaces-dn42"
+
+        output = (
+            subprocess.check_output(shlex.split(command), timeout=timeout, stderr=subprocess.STDOUT)
+            .decode('utf-8')
+            .strip()
+        )
+
+    except subprocess.CalledProcessError as e:
+        output = e.output.decode('utf-8').strip()
+    return output
+
+
+def ifdown(interface, timeout=3, force=False) -> str:
+    """
+        Runs an ifdown command and retrieves the output.
+
+                Parameters:
+                        interface (str): Interface name to bring down
+                        timeout (int): Command timeout in seconds
+                        force (bool): Force the interface down
+
+                Returns:
+                        output (str): Command output
+        """
+    try:
+        iface_file = "/data/automation/interfaces-dn42"
+
+        if force:
+            command = f"sudo ifdown {interface} --interfaces={iface_file} --force"
+        else:
+            command = f"sudo ifdown {interface} --interfaces={iface_file}"
+
+        output = (
+            subprocess.check_output(shlex.split(command), timeout=timeout, stderr=subprocess.STDOUT)
+            .decode('utf-8')
+            .strip()
+        )
+
+    except subprocess.CalledProcessError as e:
+        output = e.output.decode('utf-8').strip()
+    return output
+
+
+def ip_link_del(interface, timeout=3) -> str:
+    """
+        Runs an ip link del command and retrieves the output.
+
+                Parameters:
+                        interface (str): Interface name to bring down
+                        timeout (int): Command timeout in seconds
+
+                Returns:
+                        output (str): Command output
+        """
+    try:
+        command = f"sudo ip link del {interface}"
+
+        output = (
+            subprocess.check_output(shlex.split(command), timeout=timeout, stderr=subprocess.STDOUT)
+            .decode('utf-8')
+            .strip()
+        )
+
+    except subprocess.CalledProcessError as e:
+        output = e.output.decode('utf-8').strip()
+    return output
