@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/tatk-dn42/agent/compare/v0.6.0...v0.7.0) (2025-08-07)
+
+
+### Features
+
+* create tunnels ([#39](https://github.com/tatk-dn42/agent/issues/39)) ([731535f](https://github.com/tatk-dn42/agent/commit/731535f6e8df85a064c187cd4ac4804bf71b0b55))
+
 ## [0.6.0](https://github.com/tatk-dn42/agent/compare/v0.5.2...v0.6.0) (2024-12-21)
 
 
