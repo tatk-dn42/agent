@@ -1,13 +1,13 @@
 {%- set ifname = peer_info.name -%}
-{%- if peer_info.ip_addresses.ipv6.local -%}
+{%- if peer_info.ip_addresses is defined and peer_info.ip_addresses and peer_info.ip_addresses.ipv6 is defined and peer_info.ip_addresses.ipv6 and peer_info.ip_addresses.ipv6.local -%}
 {%- set local_v6 = peer_info.ip_addresses.ipv6.local -%}
-{% elif peer_info.ip_addresses.ipv6.remote and peer_info.ip_addresses.ipv6.remote.startswith('fe80:') %}
+{% elif peer_info.ip_addresses is defined and peer_info.ip_addresses and peer_info.ip_addresses.ipv6 is defined and peer_info.ip_addresses.ipv6 and peer_info.ip_addresses.ipv6.remote and peer_info.ip_addresses.ipv6.remote.startswith('fe80:') %}
 {%- set local_v6 = link_local_ips.ipv6 -%}
 {% else %}
 {%- set local_v6 = loopback_ips.ipv6 -%}
 {%- endif -%}
 
-{%- if peer_info.ip_addresses.ipv4.local -%}
+{%- if peer_info.ip_addresses is defined and peer_info.ip_addresses and peer_info.ip_addresses.ipv4 is defined and peer_info.ip_addresses.ipv4 and peer_info.ip_addresses.ipv4.local -%}
 {%- set local_v4 = peer_info.ip_addresses.ipv4.local -%}
 {% else %}
 {%- set local_v4 = loopback_ips.ipv4 -%}
