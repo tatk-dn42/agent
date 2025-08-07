@@ -1,7 +1,7 @@
 # pylint: disable=too-few-public-methods
 # -*- coding: utf-8 -*-
 """Module for Tunnel related requests"""
-from enum import Enum
+
 from pydantic import BaseModel, Field
 
 class TunnelBody(BaseModel):

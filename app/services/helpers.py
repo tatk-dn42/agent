@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 """Module providing helper functions for processing"""
 
-import ipaddress
 import re
 import shlex
+import ipaddress
 import subprocess
-from flask import current_app
 
 def run_bird_command(command, timeout=3, restricted=True) -> str:
     """
@@ -323,10 +322,12 @@ def ifdown(interface, timeout=3, force=False) -> str:
                         output (str): Command output
         """
     try:
+        iface_file = "/data/automation/interfaces-dn42"
+
         if force:
-            command = f"sudo ifdown {interface} --interfaces=/data/automation/interfaces-dn42 --force"
+            command = f"sudo ifdown {interface} --interfaces={iface_file} --force"
         else:
-            command = f"sudo ifdown {interface} --interfaces=/data/automation/interfaces-dn42"
+            command = f"sudo ifdown {interface} --interfaces={iface_file}"
 
         output = (
             subprocess.check_output(shlex.split(command), timeout=timeout, stderr=subprocess.STDOUT)

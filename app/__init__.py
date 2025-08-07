@@ -2,8 +2,6 @@
 # pylint: disable=import-outside-toplevel
 """Module for Flask Web App"""
 
-import logging
-
 import sentry_sdk
 from flask_openapi3 import OpenAPI, Info
 
