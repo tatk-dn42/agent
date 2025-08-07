@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/tatk-dn42/agent/compare/v0.7.0...v0.7.1) (2025-08-07)
+
+
+### Bug Fixes
+
+* Error Handling ([#42](https://github.com/tatk-dn42/agent/issues/42)) ([a5b193e](https://github.com/tatk-dn42/agent/commit/a5b193e596a13b9046596ccb4f71ff11aeca33e3))
+
 ## [0.7.0](https://github.com/tatk-dn42/agent/compare/v0.6.0...v0.7.0) (2025-08-07)
 
 
